@@ -6,10 +6,10 @@ square corners and hairline dividers.
 
 ## Install
 
-Install a versioned archive from the public PQSetup GitHub release:
+Install a versioned archive from this repository's public GitHub release:
 
 ```bash
-npm install "https://github.com/MolarVerse/PQSetup/releases/download/pq-design-v0.1.1/molarverse-pq-design-0.1.1.tgz"
+npm install "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.2/molarverse-pq-design-0.1.2.tgz"
 ```
 
 Commit the updated `package.json` and `package-lock.json`. A clean `npm ci`
@@ -44,13 +44,12 @@ logic in the consuming app.
 
 ## Change and release
 
-Edit this package in the PQSetup repository. When tokens change, run
-`npm --prefix frontend run tokens` and commit the generated CSS. Build and
-test the workspace with `npm --prefix frontend test` and
-`npm --prefix frontend run build`.
+Edit this repository. When tokens change, run `npm run tokens` and commit
+the generated CSS. Validate with `npm ci`, `npm test`, `npm run build`,
+`npm pack`, and `node scripts/verify-package.mjs <archive>`.
 
 Bump this package's version when exported controls, tokens or public class
-names change. A `pq-design-v<version>` tag on a verified main commit publishes
+names change. A `v<version>` tag on a verified main commit publishes
 the installable archive and SHA-256 checksums. Consumers update the archive
 URL and lockfile together. The design version is independent of PQSetup's
 Python release version.

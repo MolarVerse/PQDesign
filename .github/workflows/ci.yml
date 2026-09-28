@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run tokens
+      - run: git diff --exit-code -- src/styles/tokens.css
+      - run: npm test
+      - run: npm run build
+      - name: Check standalone archive
+        run: |
+          mkdir -p dist/package
+          npm pack --pack-destination dist/package
+          archive=$(find dist/package -name '*.tgz' -print -quit)
+          node scripts/verify-package.mjs "$archive"

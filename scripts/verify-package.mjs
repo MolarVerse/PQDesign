@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Install the packed library outside the PQSetup workspace and check exports. */
+/** Install the packed library outside this repository and check exports. */
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";

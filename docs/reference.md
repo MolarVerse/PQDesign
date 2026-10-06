@@ -1,5 +1,7 @@
 # Reference
 
+![Tokens generate CSS; applications import CSS and React controls separately.](_static/design-flow.svg)
+
 ## Package exports
 
 | Import | Contents |
@@ -94,3 +96,56 @@ and points to a commit on `main`. It verifies the standalone archive, then
 publishes the `.tgz` and `SHA256SUMS` to GitHub Releases. Consumers update
 their archive URL and lockfile together. PQDesign versions are independent
 of the Python application versions.
+
+## Documentation styling
+
+Copy the versioned `tokens.css`, shared `docs/_static/pq-docs.css`,
+`pq-docs.js` and `pq-logo.png` into the manual's static assets;
+record their source and checksum. Load tokens first. The script makes
+unlinked figures open at full size; the logo also appears in narrow headers.
+Furo supplies navigation and search. The adapter overrides variables on
+`body`, where Furo defines them:
+
+```css
+body {
+  --font-stack: var(--mono);
+  --font-stack--monospace: var(--mono);
+}
+
+body[data-theme="light"] {
+  --color-foreground-primary: var(--ink);
+  --color-background-primary: var(--surface);
+  --color-brand-primary: var(--accent);
+}
+```
+
+```python
+html_logo = "_static/pq-logo.png"
+html_favicon = "_static/pq-logo.png"
+html_css_files = ["pq-tokens.css", "pq-docs.css"]
+html_js_files = ["pq-docs.js"]
+```
+
+The complete adapter also covers automatic light mode and retains Furo's
+dark palette. Keep application layouts and font files with the consumer.
+`styles.css` includes global selectors such as `body`, `.notice` and
+`.command-palette`; `tokens.css` is the suitable input for an existing theme.
+
+## Reproduce the gallery
+
+Copy [the gallery files](https://github.com/MolarVerse/PQDesign/tree/main/docs/examples)
+into an empty directory, then run:
+
+```bash
+npm install react@19 react-dom@19 lucide-react@0.468 \
+  "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.2/molarverse-pq-design-0.1.2.tgz"
+npm install --save-dev esbuild@0.25.12
+npx esbuild gallery.tsx --bundle --format=esm --jsx=automatic --outdir=dist
+cp gallery.html dist/index.html
+python3 -m http.server 9348 --bind 127.0.0.1 --directory dist
+```
+
+Open <http://127.0.0.1:9348>. The figures show these released controls at
+1120 × 600: initial state; Target changed to 310 K with its dialog open;
+and command search open. Capture details are in
+[the image manifest](_static/components.source.json).

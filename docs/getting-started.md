@@ -1,107 +1,67 @@
 # Getting started
 
-## Requirements
-
-| Dependency | Package requirement | Purpose |
-| --- | --- | --- |
-| Node.js | `>=20` | Install and build the package |
-| React | `>=19.0.0` | Render controls |
-| React DOM | `>=19.0.0` | Mount controls and tooltip portals |
-| Lucide React | `>=0.400.0` | Control icons |
+![Native PQDesign dialog showing the updated target of 310 K.](_static/dialog.png)
 
 ## Install
 
-In a React project with a CSS-capable bundler:
+Use Node.js 20+ and a React project with CSS bundling:
 
 ```bash
 npm install react@19 react-dom@19 lucide-react@0.468 \
   "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.2/molarverse-pq-design-0.1.2.tgz"
 ```
 
-Commit `package.json` and `package-lock.json`. Later installations use
-`npm ci`; the archive is independent of adjacent repository checkouts.
+Commit `package.json` and `package-lock.json`; reinstall with `npm ci`.
 
 ## Render a control
 
-Place this in the client entry point, with `<div id="root"></div>` in the
-HTML page. State remains in the application.
+Put `<div id="root"></div>` in the HTML and this in the client entry point:
 
 ```tsx
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Field, Group } from "@molarverse/pq-design";
+import { Field } from "@molarverse/pq-design";
 import "@molarverse/pq-design/styles.css";
 
 function TemperatureControl() {
   const [temperature, setTemperature] = useState("300");
 
   return (
-    <Group title="Temperature">
-      <Field label="Target" unit="K">
-        <input
-          type="number"
-          min="0"
-          value={temperature}
-          onChange={(event) => setTemperature(event.target.value)}
-        />
-      </Field>
-      <output>{temperature} K</output>
-    </Group>
+    <Field label="Target" unit="K">
+      <input type="number" min="0" value={temperature}
+        onChange={(event) => setTemperature(event.target.value)} />
+    </Field>
   );
 }
 
 createRoot(document.getElementById("root")!).render(<TemperatureControl />);
 ```
 
-`Field` assigns an input ID and associates it with the label. The example
-stores the input text; scientific validation and conversion to a numeric
-value belong to the application. Import app-specific CSS after the package
-stylesheet. Controls with dialogs or tooltips use the browser DOM.
+`Field` connects the label to its input. State and numeric validation stay
+in the application. Import application CSS after `styles.css`.
 
-## Use only the tokens
+## Dialog and search
 
-For existing controls, import the token stylesheet and map variables to
-your own selectors:
+The [component example](https://github.com/MolarVerse/PQDesign/blob/main/docs/examples/gallery.tsx)
+uses the released controls:
 
-```css
-@import "@molarverse/pq-design/tokens.css";
+| Action | Control | Behaviour |
+| --- | --- | --- |
+| Edit Target or Thermostat | `Field`, `Choice` | Change application state |
+| Change Enabled, Periodic or Restart | `ConditionRow`, `Toggle` | Return a boolean through `onChange` |
+| Hover or focus the information icon | `Info` | Show supplementary text |
+| Open dialog | `Modal` | Edit Target; Done, Escape or Close ends the dialog |
+| Search | `CommandPalette` | Filter commands; arrow keys select, Enter runs, Escape closes |
 
-.result-panel {
-  padding: var(--pad);
-  color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-family: var(--mono);
-}
-```
+![PQDesign command palette showing Conditions and Run groups.](_static/command-palette.png)
 
-`styles.css` includes global selectors such as `body`, `.notice` and
-`.command-palette`. Use `tokens.css` when those names already belong to the
-consumer.
+Dialogs and tooltips use the browser DOM. IBM Plex Mono is the preferred
+font; supply its font files when that exact face is required.
 
-## Documentation styling
+## Existing controls and documentation
 
-Use the exported `tokens.css` and the shared documentation stylesheet,
-`docs/_static/pq-docs.css`, for the manuals of all PQ tools. The adapter maps
-PQDesign values to the Furo theme:
-
-```css
-body {
-  --font-stack: var(--mono);
-  --font-stack--monospace: var(--mono);
-}
-
-body[data-theme="light"] {
-  --color-foreground-primary: var(--ink);
-  --color-background-primary: var(--surface);
-  --color-brand-primary: var(--accent);
-}
-```
-
-Copy the token stylesheet from the installed version and the shared
-documentation stylesheet into the site's static assets. Record the token
-archive URL and checksum, and load tokens before `pq-docs.css`. Local copies
-keep documentation builds independent of other repository checkouts.
-The complete stylesheet also handles automatic light mode while retaining
-Furo's dark palette. Furo supplies navigation, search and page structure; font files and layout
-remain with the documentation site.
+Import `tokens.css` for your own controls. It supplies variables without
+global component selectors. For manuals, load that versioned token copy
+before `docs/_static/pq-docs.css`. The shared adapter maps Furo variables on
+`body` and retains Furo's dark palette. See [Reference](reference.md#documentation-styling)
+for the mapping and [gallery reproduction](reference.md#reproduce-the-gallery).

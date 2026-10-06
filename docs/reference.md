@@ -84,7 +84,7 @@ npm run tokens
 npm test
 npm run build
 npm pack
-node scripts/verify-package.mjs molarverse-pq-design-0.1.2.tgz
+node scripts/verify-package.mjs molarverse-pq-design-0.1.3.tgz
 ```
 
 Commit regenerated CSS with token changes. When exports, token values or

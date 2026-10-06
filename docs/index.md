@@ -1,6 +1,6 @@
 # PQDesign
 
-Shared tokens, CSS and React controls for scientific interfaces.
+Shared tokens, React controls and terminal presentation for scientific interfaces.
 
 ![PQDesign 0.1.2 controls in a React example: units beside field labels, select, toggles and grouped conditions.](_static/components.png)
 
@@ -14,6 +14,7 @@ The application owns state, validation and page layout.
 | `styles.css` and React exports | Shared controls, typography and focus styles |
 | `tokens.css` | Existing controls or documentation theme |
 | `tokens.json` | Font, colour, shape and spacing values |
+| `terminal.py` | Python wordmarks, help and event logs |
 
 Start with the [visual guide](getting-started.md).
 See [Reference](reference.md) for properties, tokens and release checks.
@@ -23,4 +24,5 @@ See [Reference](reference.md) for properties, tokens and release checks.
 
 getting-started
 reference
+terminal
 ```

@@ -1,0 +1,44 @@
+{
+  "package": "@molarverse/pq-design",
+  "version": "0.1.2",
+  "archive": "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.2/molarverse-pq-design-0.1.2.tgz",
+  "archive_integrity": "sha512-XG/MlJx/QxApcEZFgJeNmRrhfNm5oIW4Uhh/KJcPfF3ejPYXwnW6/e05ezvCUMTKc/Regw7DkTvYgXBErKN91A==",
+  "date": "2026-10-06",
+  "viewport": {
+    "width": 1120,
+    "height": 600
+  },
+  "example": [
+    "docs/examples/gallery.tsx",
+    "docs/examples/gallery.css",
+    "docs/examples/gallery.html"
+  ],
+  "images": [
+    {
+      "file": "components.png",
+      "state": "Initial component example",
+      "sha256": "b699e1b13abe7857f74585020dd366a9d1d991d26f84f89ed2d27c66e692fa7f"
+    },
+    {
+      "file": "dialog.png",
+      "state": "Target changed to 310 K; native dialog open",
+      "sha256": "24fdb041ec1bca2fdf4330fcc71e3c418687ab96a021ac884225fb87c5e1ccdd"
+    },
+    {
+      "file": "command-palette.png",
+      "state": "Command palette open with Conditions and Run groups",
+      "sha256": "8125782fbcc5824e07b979787bb841d7b4ebcc20bf28ec47d0128532f8818861"
+    }
+  ],
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "lucide-react": "0.468.0",
+    "esbuild": "0.25.12"
+  },
+  "source_sha256": {
+    "docs/examples/gallery.tsx": "089d29de9370fa015b17a7097e3f73add01a1121ff39b5e5234fd0e859caaeb4",
+    "docs/examples/gallery.css": "143421a4a680f535b6c2d9c9f4732cede03ada3804fa09f650635b86dc62af3c",
+    "docs/examples/gallery.html": "02854737c4fd7729ba7856585b41df0c77989cf1649483470caec320c55671c0"
+  }
+}

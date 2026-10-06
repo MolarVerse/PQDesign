@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Install the packed library outside this repository and check exports. */
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -11,6 +12,9 @@ if (!existsSync(archive)) {
 }
 
 const consumer = mkdtempSync(join(tmpdir(), "pq-design-consumer-"));
+const terminalHash = createHash("sha256")
+  .update(readFileSync(new URL("../python/pq_terminal.py", import.meta.url)))
+  .digest("hex");
 try {
   writeFileSync(
     join(consumer, "package.json"),
@@ -26,7 +30,8 @@ try {
     [
       "--input-type=module",
       "-e",
-      `import { existsSync } from "node:fs";
+      `import { existsSync, readFileSync } from "node:fs";
+       import { createHash } from "node:crypto";
        import { createRequire } from "node:module";
        import { createElement } from "react";
        import { renderToStaticMarkup } from "react-dom/server";
@@ -41,10 +46,14 @@ try {
        if (!markup.includes("Input") || !markup.includes("<input")) {
          throw new Error("Packed React control did not render");
        }
-       for (const name of ["styles.css", "tokens.css", "tokens.json"]) {
+       for (const name of ["styles.css", "tokens.css", "tokens.json", "terminal.py"]) {
          if (!existsSync(require.resolve("@molarverse/pq-design/" + name))) {
            throw new Error(name + " is unavailable");
          }
+       }
+       const terminal = readFileSync(require.resolve("@molarverse/pq-design/terminal.py"));
+       if (createHash("sha256").update(terminal).digest("hex") !== "${terminalHash}") {
+         throw new Error("Packed Python renderer differs from the tested source");
        }`,
     ],
     { cwd: consumer, stdio: "inherit" },

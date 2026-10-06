@@ -8,7 +8,7 @@ Use Node.js 20+ and a React project with CSS bundling:
 
 ```bash
 npm install react@19 react-dom@19 lucide-react@0.468 \
-  "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.2/molarverse-pq-design-0.1.2.tgz"
+  "https://github.com/MolarVerse/PQDesign/releases/download/v0.1.3/molarverse-pq-design-0.1.3.tgz"
 ```
 
 Commit `package.json` and `package-lock.json`; reinstall with `npm ci`.

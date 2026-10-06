@@ -26,6 +26,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pytest "rich>=13" "rich-argparse>=1.7"
+      - run: python -m pytest python/tests -q
       - run: npm ci
       - run: npm run tokens
       - run: git diff --exit-code -- src/styles/tokens.css
@@ -46,6 +51,6 @@ jobs:
           sha256sum ./*.tgz > SHA256SUMS
           gh release create "$RELEASE_TAG" ./*.tgz ./SHA256SUMS \
             --title "PQ design ${RELEASE_TAG#v}" \
-            --notes "Versioned flat-mono tokens, CSS and React controls for PQSetup, PQViewer and PQEnalyzer Web." \
+            --notes "Shared flat-mono tokens, React controls and Python terminal presentation for the PQ applications." \
             --verify-tag \
             --repo "$GITHUB_REPOSITORY"

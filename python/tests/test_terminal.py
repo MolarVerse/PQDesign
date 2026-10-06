@@ -28,6 +28,32 @@ def plain(value):
     return re.sub(r"\033\[[0-9;]*m", "", value)
 
 
+@pytest.mark.parametrize("columns", [80, 48, 36, None])
+def test_desktop_startup_identifies_the_window_without_a_browser(monkeypatch, columns):
+    stream = TTY() if columns else io.StringIO()
+    monkeypatch.setattr(sys, "stdout", stream)
+    monkeypatch.setenv("TERM", "xterm-256color")
+    monkeypatch.setenv("COLUMNS", str(columns or 80))
+    monkeypatch.delenv("NO_COLOR", raising=False)
+
+    Terminal("PQEnalyzer", "1.2.3", COLORS).desktop([("Data", "5,000 rows / 1 file")])
+
+    output = plain(stream.getvalue())
+    assert "PQEnalyzer" in output and "Desktop" in output
+    assert "5,000 rows / 1 file" in output
+    assert "Close window / Ctrl+C" in output
+    assert "Browser" not in output and "Open" not in output and "http" not in output
+    if columns:
+        assert "1.2.3" in output
+        assert max(map(len, output.splitlines())) <= columns
+    else:
+        assert output.splitlines() == [
+            "PQEnalyzer  Desktop", "Data   5,000 rows / 1 file",
+            "Stop   Close window / Ctrl+C",
+        ]
+        assert "\033" not in stream.getvalue()
+
+
 @pytest.mark.parametrize("name", ["PQSetup", "PQViewer", "PQEnalyzer"])
 @pytest.mark.parametrize("columns", [80, 48, 36])
 def test_terminal_identity_and_server_url_fit(monkeypatch, name, columns):

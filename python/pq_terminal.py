@@ -1,4 +1,4 @@
-"""Shared terminal presentation for the PQ browser applications.
+"""Shared terminal presentation for the PQ applications.
 
 Vendor this file unchanged with the design tokens. Requires Rich and rich-argparse.
 """
@@ -117,27 +117,40 @@ class Terminal:
 
     def startup(self, url, details=()):
         """Present a server that is already ready, with optional app facts."""
+        self._status("Web", url, details, "Ctrl+C")
+
+    def desktop(self, details=()):
+        """Present a desktop window that is already ready."""
+        self._status("Desktop", None, details, "Close window / Ctrl+C")
+
+    def _status(self, mode, url, details, stop):
         console = self._console(sys.stdout)
         if not console.is_terminal:
-            lines = [f"{self.name}  Web"]
+            lines = [f"{self.name}  {mode}"]
             lines.extend(f"{label:<7}{value}" for label, value in details)
-            lines.extend((f"Open   {url}", "Stop   Ctrl+C"))
+            if url:
+                lines.append(f"Open   {url}")
+            lines.append(f"Stop   {stop}")
             print("\n".join(lines), flush=True)
             return
 
-        self._header(console, "Web")
+        self._header(console, mode)
         console.print()
-        link = Text(url, style=f"bold {self.colors['accent']}")
         if console.width >= 48:
-            console.print(Text.assemble(("  Browser   ", "dim"), link))
+            if url:
+                console.print(Text.assemble(
+                    ("  Browser   ", "dim"),
+                    (url, f"bold {self.colors['accent']}"),
+                ))
             for label, value in details:
                 console.print(Text.assemble((f"  {label:<8}  ", "dim"), str(value)))
         else:
-            console.print(link)
+            if url:
+                console.print(Text(url, style=f"bold {self.colors['accent']}"))
             for _label, value in details:
                 console.print(Text(str(value)))
         console.print()
-        console.print(Text.assemble(("  Ctrl+C", "bold"), (" to stop", "dim")))
+        console.print(Text.assemble((f"  {stop}", "bold"), (" to stop", "dim")))
         console.print()
         sys.stdout.flush()
 

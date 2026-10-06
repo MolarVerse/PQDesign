@@ -40,7 +40,14 @@ terminal.startup(url, details=[("Data", dataset_summary)])
 terminal.log.info("Server ready")
 ```
 
-The application owns URL validation, readiness and event selection. The renderer
+After building a desktop window:
+
+```python
+terminal.desktop(details=[("Data", dataset_summary)])
+terminal.log.info("Desktop ready")
+```
+
+The application owns URL validation, readiness, shutdown and event selection. The renderer
 does not open browsers, bind ports, monitor files or configure global loggers.
 
 ## Logging

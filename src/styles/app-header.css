@@ -1,0 +1,676 @@
+header.pq-app-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(148px, min(28vw, 440px)) minmax(max-content, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding-inline: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font: 13px / 1.4 var(--mono);
+}
+
+.pq-header-brand,
+.pq-header-end,
+.pq-header-controls,
+.pq-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.pq-header-brand {
+  min-width: 0;
+  gap: 8px;
+}
+
+.pq-header-brand img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex: none;
+}
+
+.pq-header-identity {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  gap: 8px;
+}
+
+.pq-header-brand strong,
+.pq-header-context {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pq-header-brand strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pq-header-context {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.pq-header-search {
+  display: flex;
+  min-width: 0;
+}
+
+.pq-header-actions {
+  justify-content: flex-end;
+  min-width: 0;
+  gap: 2px;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --pq-mobile-header-height: 48px;
+  }
+
+  header.pq-app-header[data-mobile-search="inline"] {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0;
+    min-height: var(--pq-mobile-header-height);
+    padding-inline: 8px;
+  }
+
+  .pq-app-header[data-mobile-search="inline"] .pq-header-start {
+    padding-inline-end: 4px;
+  }
+
+  .pq-header-identity {
+    display: grid;
+    gap: 0;
+  }
+
+  .pq-header-context {
+    font-size: 10px;
+  }
+
+  .pq-header-actions {
+    gap: 0;
+  }
+
+  .pq-header-actions > :is(button, a) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  header.pq-app-header[data-mobile-search="row"] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    padding-block: 4px 8px;
+  }
+
+  .pq-app-header[data-mobile-search="row"] .pq-header-search {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .pq-app-header[data-mobile-search="row"] .pq-header-end {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 360px) {
+  .pq-app-header { --pq-header-icon-width: 36px; }
+
+  .pq-app-header[data-mobile-search="inline"] :is(
+    button.pq-search-trigger[data-mobile="icon"],
+    .pq-header-actions > [data-header-action],
+    .pq-header-status > button
+  ) {
+    width: 36px;
+    min-width: 36px;
+  }
+
+  .pq-header-brand {
+    gap: 4px;
+  }
+
+  .pq-header-brand strong {
+    font-size: 11px;
+  }
+
+  .pq-header-brand img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.pq-header-end,
+.pq-header-controls {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .pq-header-end,
+  .pq-header-controls {
+    gap: 0;
+  }
+}
+
+header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .pq-task-action) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  background: transparent;
+  box-shadow: none;
+  font: inherit;
+}
+
+header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .pq-task-action)
+  :is(svg) {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.75;
+}
+
+header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .pq-task-action):hover:not(:disabled) {
+  background: var(--surface-subtle);
+  color: var(--ink);
+}
+
+header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .pq-task-action):is(
+  [aria-expanded="true"], [aria-pressed="true"], [aria-selected="true"]
+) {
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--accent);
+}
+
+header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .pq-task-action):focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.pq-header-modes [role="tablist"] {
+  display: flex;
+  gap: 0;
+  border: 0;
+  background: transparent;
+}
+
+.pq-header-modes [role="tab"] + [role="tab"] {
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"]) {
+    min-height: 44px;
+  }
+
+  header.pq-app-header [data-header-action] {
+    width: var(--pq-header-icon-width, 44px);
+    min-width: var(--pq-header-icon-width, 44px);
+    padding-inline: 0;
+  }
+
+  .pq-app-header .pq-header-action-label {
+    display: none;
+  }
+}
+
+.pq-header-file-button {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pq-header-file-button .pq-header-context {
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+
+.pq-header-file-button:hover .pq-header-context {
+  color: var(--ink);
+}
+
+.pq-header-file-button:focus-visible,
+.pq-header-files button:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.pq-header-files {
+  width: min(480px, calc(100% - 24px));
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.pq-header-files::backdrop {
+  background: rgb(29 31 30 / 30%);
+}
+
+.pq-dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: none;
+  gap: 12px;
+  padding-inline-start: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pq-dialog-heading h2 {
+  margin: 0;
+  color: var(--ink);
+  font: 600 13px / 1.4 var(--mono);
+}
+
+.pq-dialog-heading p {
+  margin: 2px 0 6px;
+  color: var(--muted);
+  font: 12px / 1.4 var(--mono);
+}
+
+.pq-dialog-heading .pq-dialog-close,
+.pq-header-files button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.pq-dialog-close:hover,
+.pq-header-files button:hover {
+  background: var(--surface-subtle);
+}
+
+.pq-dialog-close:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.pq-header-files ul {
+  margin: 0;
+  padding: 12px 14px 12px 32px;
+  overflow-wrap: anywhere;
+}
+
+.pq-header-start,
+.pq-header-status {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.pq-header-start {
+  gap: 6px;
+}
+
+.pq-header-status {
+  flex: none;
+}
+
+.pq-header-indicator {
+  display: inline-flex;
+  min-width: 24px;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.pq-header-status-label {
+  display: none;
+  color: var(--ink);
+  font: 11px var(--mono);
+  white-space: nowrap;
+}
+
+@media (min-width: 1100px) {
+  .pq-header-status-label {
+    display: inline;
+  }
+}
+
+.pq-header-indicator:hover {
+  background: var(--surface-subtle);
+}
+
+.pq-header-indicator:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.pq-header-status-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  color: var(--muted);
+  background: radial-gradient(circle, transparent 3px, currentColor 3.5px 4px, transparent 5px);
+}
+
+.pq-header-indicator[data-tone="ready"] .pq-header-status-dot,
+.pq-status-dialog[data-tone="ready"] .pq-header-status-dot {
+  color: var(--success);
+  background: radial-gradient(circle, currentColor 4px, transparent 5px);
+}
+
+.pq-header-indicator[data-tone="warning"] .pq-header-status-dot,
+.pq-status-dialog[data-tone="warning"] .pq-header-status-dot {
+  color: var(--warning);
+  background: radial-gradient(circle, currentColor 4px, transparent 5px);
+}
+
+.pq-header-indicator[data-tone="offline"] .pq-header-status-dot,
+.pq-status-dialog[data-tone="offline"] .pq-header-status-dot {
+  color: var(--danger);
+  background: radial-gradient(circle, currentColor 4px, transparent 5px);
+}
+
+@media (max-width: 760px) {
+  .pq-header-start {
+    gap: 4px;
+  }
+
+  .pq-header-status > button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.pq-status-dialog {
+  width: min(340px, calc(100% - 24px));
+}
+
+.pq-status-dialog .pq-dialog-heading {
+  border-bottom: 0;
+}
+
+.pq-status-dialog-body {
+  padding: 1px 14px 12px;
+}
+
+.pq-status-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pq-status-dialog .pq-health-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pq-status-dialog .pq-health-check {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  min-height: 30px;
+  text-align: left;
+  font: inherit;
+  color: var(--muted);
+}
+
+.pq-status-dialog .pq-health-check[data-state="pass"] {
+  color: var(--success);
+}
+
+.pq-status-dialog .pq-health-check[data-state="fail"] {
+  color: var(--danger);
+}
+
+.pq-health-detail {
+  display: none;
+  padding-block-end: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pq-health-check[aria-expanded="true"] + .pq-health-detail {
+  display: block;
+}
+
+.pq-health-checks li {
+  position: relative;
+}
+
+.pq-health-check[aria-expanded="false"]:focus-visible + .pq-health-detail {
+  display: block;
+}
+
+@media (hover: hover) {
+  .pq-health-check[aria-expanded="false"]:hover + .pq-health-detail {
+    display: block;
+  }
+}
+
+.pq-health-check[aria-expanded="false"] + .pq-health-detail {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  padding: 7px 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  pointer-events: none;
+}
+
+.pq-health-checks li:last-child .pq-health-check[aria-expanded="false"] + .pq-health-detail {
+  inset-block-end: 100%;
+}
+
+@media (pointer: coarse) {
+  .pq-status-dialog .pq-health-check {
+    min-height: 44px;
+  }
+}
+
+button.pq-auto-refresh {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+button.pq-auto-refresh[aria-pressed="true"] {
+  background: var(--surface-subtle);
+  color: var(--ink);
+  box-shadow: inset 0 -2px var(--accent);
+}
+
+button.pq-auto-refresh:hover:not(:disabled) {
+  background: var(--surface-subtle);
+}
+
+button.pq-auto-refresh:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+button.pq-auto-refresh:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+@media (max-width: 760px) {
+  button.pq-auto-refresh {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+header.pq-app-header .pq-help-trigger {
+  width: var(--pq-header-icon-width, 32px);
+  padding: 0;
+  cursor: pointer;
+}
+
+dialog.pq-help-dialog {
+  width: min(440px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font: 13px / 1.45 var(--mono);
+}
+
+dialog.pq-help-dialog::backdrop {
+  background: rgb(29 31 30 / 30%);
+}
+
+.pq-help-dialog .modal-body {
+  padding: 0;
+}
+
+.pq-help-intro,
+.pq-shortcuts-group {
+  padding: 12px 14px;
+}
+
+.pq-help-intro p {
+  margin: 0;
+}
+
+.pq-help-menu {
+  border-top: 1px solid var(--border);
+}
+
+.pq-help-menu > :is(a, button) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  gap: 10px;
+  padding-inline: 14px;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  text-decoration: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pq-help-menu > :is(a, button):hover {
+  background: var(--surface-subtle);
+}
+
+.pq-help-menu > :is(a, button):focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
+}
+
+.pq-help-menu svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  stroke-width: 1.75;
+}
+
+.pq-help-menu a > svg:last-child {
+  margin-inline-start: auto;
+  color: var(--muted);
+}
+
+.pq-shortcuts-group + .pq-shortcuts-group {
+  border-top: 1px solid var(--border);
+}
+
+.pq-shortcuts-group h3 {
+  margin: 0 0 7px;
+  font: 600 12px var(--mono);
+}
+
+.pq-shortcuts-group dl,
+.pq-shortcuts-group dd {
+  margin: 0;
+}
+
+.pq-shortcuts-group dl > div {
+  display: grid;
+  grid-template-columns: minmax(82px, 32%) 1fr;
+  align-items: baseline;
+  gap: 12px;
+  padding-block: 3px;
+}
+
+.pq-shortcuts-group kbd {
+  display: inline-block;
+  padding: 1px 4px;
+  border: 1px solid var(--border);
+  background: var(--surface-subtle);
+  font: 11px / 1.35 var(--mono);
+}
+
+.pq-help-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.pq-help-options button {
+  min-height: 44px;
+  padding-inline: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.pq-help-options button[aria-pressed="true"] {
+  box-shadow: inset 0 -2px var(--accent);
+}
+
+.pq-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pq-confirm-actions > button {
+  min-height: 44px;
+  padding-inline: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.pq-confirm-actions > button:hover {
+  background: var(--surface-subtle);
+}

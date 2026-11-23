@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { DialogHeading } from "./DialogHeading";
 import { useEffect, useRef, type ReactNode } from "react";
 
 /**
@@ -10,12 +10,14 @@ export default function Modal({
   title,
   subtitle,
   size = "md",
+  className,
   onClose,
   children,
 }: {
   open: boolean;
   title: ReactNode;
   subtitle?: ReactNode;
+  className?: string;
   size?: "md" | "lg" | "full" | "input";
   onClose: () => void;
   children: ReactNode;
@@ -32,7 +34,7 @@ export default function Modal({
   return (
     <dialog
       ref={ref}
-      className={`modal modal-${size}`}
+      className={`modal modal-${size}${className ? ` ${className}` : ""}`}
       aria-label={typeof title === "string" ? title : undefined}
       onCancel={(event) => {
         event.preventDefault();
@@ -44,20 +46,7 @@ export default function Modal({
     >
       {open && (
         <>
-          <header className="modal-header">
-            <div className="modal-heading">
-              <h2>{title}</h2>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            <button
-              type="button"
-              className="modal-close"
-              aria-label="Close"
-              onClick={onClose}
-            >
-              <X size={16} aria-hidden="true" />
-            </button>
-          </header>
+          <DialogHeading title={title} subtitle={subtitle} onClose={onClose} />
           <div className="modal-body">{children}</div>
         </>
       )}

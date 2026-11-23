@@ -1,6 +1,6 @@
 {
   "name": "@molarverse/pq-design",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Flat-mono design language (tokens, base styles, React primitives) shared by PQSetup, PQViewer and PQEnalyzer.",
   "license": "MIT",
   "type": "module",
@@ -18,6 +18,8 @@
       "import": "./dist/index.js"
     },
     "./styles.css": "./src/styles/index.css",
+    "./app-header.css": "./src/styles/app-header.css",
+    "./search-trigger.css": "./src/styles/search-trigger.css",
     "./tokens.css": "./src/styles/tokens.css",
     "./tokens.json": "./tokens.json",
     "./terminal.py": "./python/pq_terminal.py"

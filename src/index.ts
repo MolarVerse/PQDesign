@@ -20,3 +20,10 @@ export {
   type CommandPaletteProps,
 } from "./CommandPalette";
 export { rankCommands, type SearchableCommand } from "./commandSearch";
+export { SearchTrigger, type SearchTriggerProps } from "./SearchTrigger";
+export { AppHeader, type AppHeaderProps } from "./AppHeader";
+export { HeaderStatus, type HeaderStatusProps, type HealthCheck } from "./HeaderStatus";
+export { useHealthProbe } from "./useHealthProbe";
+export { AutoRefreshButton } from "./AutoRefreshButton";
+export { DialogHeading } from "./DialogHeading";
+export { HelpButton, HelpPanels, type HelpPage } from "./HelpPanels";

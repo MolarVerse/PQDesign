@@ -1,6 +1,6 @@
 {
   "name": "@molarverse/pq-design",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Flat-mono design language (tokens, base styles, React primitives) shared by PQSetup, PQViewer and PQEnalyzer.",
   "license": "MIT",
   "type": "module",

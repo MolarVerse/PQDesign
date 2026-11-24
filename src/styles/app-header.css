@@ -424,68 +424,39 @@ header.pq-app-header :is([data-header-action], .pq-auto-refresh, [role="tab"], .
   list-style: none;
 }
 
-.pq-status-dialog .pq-health-check {
+.pq-health-check {
   display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  height: auto;
-  min-height: 30px;
-  text-align: left;
-  font: inherit;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.pq-health-symbol {
+  flex: 0 0 16px;
+  text-align: center;
+  font-weight: 600;
   color: var(--muted);
 }
 
-.pq-status-dialog .pq-health-check[data-state="pass"] {
-  color: var(--success);
-}
+.pq-health-symbol[data-state="pass"] { color: var(--success); }
+.pq-health-symbol[data-state="fail"] { color: var(--danger); }
 
-.pq-status-dialog .pq-health-check[data-state="fail"] {
-  color: var(--danger);
+button.pq-health-details-toggle {
+  min-height: 44px;
+  padding: 0 8px;
+  margin-inline-start: -8px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .pq-health-detail {
-  display: none;
-  padding-block-end: 6px;
+  margin: 0;
   color: var(--muted);
   font-size: 12px;
-}
-
-.pq-health-check[aria-expanded="true"] + .pq-health-detail {
-  display: block;
-}
-
-.pq-health-checks li {
-  position: relative;
-}
-
-.pq-health-check[aria-expanded="false"]:focus-visible + .pq-health-detail {
-  display: block;
-}
-
-@media (hover: hover) {
-  .pq-health-check[aria-expanded="false"]:hover + .pq-health-detail {
-    display: block;
-  }
-}
-
-.pq-health-check[aria-expanded="false"] + .pq-health-detail {
-  position: absolute;
-  z-index: 1;
-  inset-inline: 0;
-  padding: 7px 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  pointer-events: none;
-}
-
-.pq-health-checks li:last-child .pq-health-check[aria-expanded="false"] + .pq-health-detail {
-  inset-block-end: 100%;
-}
-
-@media (pointer: coarse) {
-  .pq-status-dialog .pq-health-check {
-    min-height: 44px;
-  }
 }
 
 button.pq-auto-refresh {
